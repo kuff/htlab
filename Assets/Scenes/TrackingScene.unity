@@ -152,6 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1efe1d2fbd7fbf4f95ebf56ae6ba49d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialProvider: 1
+  ultraleapKeyCode: 282
+  oculusKeyCode: 283
+  bothKeyCode: 284
 --- !u!4 &694649209
 Transform:
   m_ObjectHideFlags: 0
