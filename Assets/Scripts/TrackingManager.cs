@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Leap.Unity;
 using UnityEngine;
+using UnityEngine.Events;
 
 /*
  * Switch between supported hand tracking providers
@@ -15,9 +16,16 @@ public class TrackingManager : MonoBehaviour
         Oculus,
         Both
     }
+    
+    [Serializable]
+    public class TrackingProviderChangeEvent : UnityEvent<TrackingProvider> { }
+    [Tooltip("Invoked whenever the TrackingProvider changes")]
+    public TrackingProviderChangeEvent onTrackingProviderChange = new TrackingProviderChangeEvent();
 
     [Tooltip("TrackingProvider to use on app startup.")]
     public TrackingProvider initialProvider;
+    [HideInInspector]
+    public TrackingProvider currentProvider;
 
     [Tooltip("KeyCode for enabling the Ultraleap hand tracking provider.")]
     public KeyCode ultraleapKeyCode;
@@ -26,8 +34,8 @@ public class TrackingManager : MonoBehaviour
     [Tooltip("KeyCode for enabling both Ultraleap and Oculus hand tracking providers simultaneously.")]
     public KeyCode bothKeyCode;
     
-    private GameObject[] _ultraleapObjects;
-    private GameObject[] _oculusObjects;
+    private GameObject[] _ultraleapObjects;  // The GameObjects which must be enabled/disabled to toggle Ultraleap
+    private GameObject[] _oculusObjects;     // The GameObjects which must be enabled/disabled to toggle Oculus
 
     protected void Start()
     {
@@ -45,14 +53,14 @@ public class TrackingManager : MonoBehaviour
         _ultraleapObjects   = new GameObject[1];
         _oculusObjects      = new GameObject[2];
         
-        // Ultraleap
+        // ...Ultraleap
         var localLeapProvider = FindObjectOfType<LeapXRServiceProvider>()?.gameObject;
         if (localLeapProvider is null) 
             Debug.LogError("Unable to locate Ultraleap GameObjects in scene");
         else 
             _ultraleapObjects[0] = localLeapProvider;
         
-        // Oculus
+        // ...Oculus
         var localOVRProvider = FindObjectsOfType<OVRHand>();
         if (localOVRProvider is null || localOVRProvider.Length != 2)
             Debug.LogError("Unable to locate Oculus GameObjects in scene");
@@ -60,7 +68,7 @@ public class TrackingManager : MonoBehaviour
             _oculusObjects = localOVRProvider.Select(hand => hand.gameObject).ToArray();
         
         // Set initial provider
-        ChangeTrackingProvider(initialProvider);
+        ChangeTrackingProvider(initialProvider, doNotInvoke:true);
     }
 
     protected void Update()
@@ -74,8 +82,11 @@ public class TrackingManager : MonoBehaviour
             ChangeTrackingProvider(TrackingProvider.Both);
     }
 
-    private void ChangeTrackingProvider(TrackingProvider tp)
+    private void ChangeTrackingProvider(TrackingProvider tp, bool doNotInvoke = false)
     {
+        // Don't update if given provider is already active
+        if (tp == currentProvider) return;
+        
         // Switch between hand tracking providers
         switch (tp)
         {
@@ -97,5 +108,9 @@ public class TrackingManager : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException(nameof(tp), tp, "Unsupported TrackingProvider given");
         }
+
+        // Update state and invoke event
+        currentProvider = tp;
+        if (!doNotInvoke) onTrackingProviderChange.Invoke(tp);
     }
 }
