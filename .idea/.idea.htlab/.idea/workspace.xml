@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49a4e0a7-3852-4a9e-a05d-8a7b57c8b559" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.78.0/AndroidOpenXR/OVRPlugin.aar.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.78.0/AndroidOpenXR/OVRPlugin.aar.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.78.0/AndroidUniversal/OVRPlugin.aar.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.78.0/AndroidUniversal/OVRPlugin.aar.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.78.0/Win64/OVRPlugin.dll.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.78.0/Win64/OVRPlugin.dll.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.78.0/Win64OpenXR/OVRPlugin.dll.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.78.0/Win64OpenXR/OVRPlugin.dll.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/OVRPlatformToolSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/OVRPlatformToolSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TrackingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TrackingScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.htlab/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.htlab/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HandLogger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HandLogger.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,7 +15,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/523a924aba464755b1747653b71e518910fc00/06/856793b0/Enumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/88d854ea2c91426ebc464f01cd71aa85157a00/57/4cf00890/Transform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9aad1b3a47484d63ba2b3985692d80e946a800/32/a88eca75/List`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9aad1b3a47484d63ba2b3985692d80e946a800/33/0096afc9/String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9aad1b3a47484d63ba2b3985692d80e946a800/cb/3bd3a57b/Type.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9aad1b3a47484d63ba2b3985692d80e946a800/d3/eaa21e38/RuntimeType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/HandLogger.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -63,10 +63,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="32160">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="24608">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="32160" />
+      <option name="pid" value="24608" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -94,6 +94,8 @@
       <workItem from="1667635541578" duration="13081000" />
       <workItem from="1667662477833" duration="564000" />
       <workItem from="1667675039825" duration="8417000" />
+      <workItem from="1667725335803" duration="15796000" />
+      <workItem from="1667771497414" duration="4503000" />
     </task>
     <servers />
   </component>

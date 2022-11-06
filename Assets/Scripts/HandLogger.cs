@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 /*
@@ -20,7 +22,8 @@ public class HandLogger : MonoBehaviour
         Head,
         Focus,
         Memory,
-        Quit
+        Quit,
+        Time
     }
 
     private OVRPlugin.HandState _hsLeft = new OVRPlugin.HandState();
@@ -40,7 +43,6 @@ public class HandLogger : MonoBehaviour
 
     protected void OnEnable()
     {
-        //Application.focusChanged += LogFocusChanged;
         Application.lowMemory += LogLowMemory;
         Application.quitting += OnApplicationQuit;
     }
@@ -51,6 +53,8 @@ public class HandLogger : MonoBehaviour
 
         var cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
         _mainCameraTransform = cameraObject!.transform;
+        
+        Log(LogType.Time);
     }
 
     protected void Update()
@@ -91,9 +95,6 @@ public class HandLogger : MonoBehaviour
 
     private static IEnumerable<object> GetSortedValues(OVRPlugin.HandState inputHandState)
     {
-        //var names = inputHandState.GetType().GetFields().Select(field => field.Name).ToList();
-        //var values = inputHandState.GetType().GetFields().Select(field => field.GetValue(inputHandState)).ToList();
-        
         var result = new List<object>
         {
             inputHandState.Status,
@@ -148,31 +149,73 @@ public class HandLogger : MonoBehaviour
 
     private static void Log(LogType type, IEnumerable listData = default, bool ignorePrevious = false)
     {
-        var enumerator = listData?.GetEnumerator();
+        // Parse data if any and setup base log string to append to
+        var data = listData?.Cast<object>().ToList();
+        var baseString = "" + (int) (Time.realtimeSinceStartup * 10000) + " " + (int)type + " ";
+
+        // Parse log command
         switch (type) 
         {
             case LogType.FPS:
-                enumerator!.MoveNext();
-                _logQueue.Add("" + (int) LogType.FPS + " " + enumerator.Current);
+                _logQueue.Add(baseString + data![0]);
                 break;
             case LogType.LeftHand:
-                break;
             case LogType.RightHand:
-                break;
             case LogType.Head:
+                _logQueue.Add(baseString + BuildRecursively(data));
                 break;
             case LogType.Focus:
-                enumerator!.MoveNext();
-                _logQueue.Add("" + (int) LogType.Focus + " " + ((bool)enumerator.Current! ? 1 : 0));
+                _logQueue.Add(baseString + ((bool)data![0] ? 1 : 0));
                 break;
             case LogType.Memory:
-                _logQueue.Add("" + (int) LogType.Focus);
+                _logQueue.Add(baseString);
                 break;
             case LogType.Quit:
-                _logQueue.Add("" + (int) LogType.Quit);
+                _logQueue.Add(baseString);
+                break;
+            case LogType.Time:
+                _logQueue.Add(baseString + DateTime.Now);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        }
+
+        string BuildRecursively(IEnumerable input)
+        {
+            var result = "";
+            var e = input.GetEnumerator();
+            while (e.MoveNext())
+            {
+                var elem = e.Current;
+                
+                // Handle predictable values of elem
+                switch (elem)
+                {
+                    case OVRPlugin.HandStatus:
+                        elem = "" + (int)elem;
+                        break;
+                    case Quaternion:
+                    case Vector3:
+                    case OVRPlugin.Vector3f:
+                    case OVRPlugin.Quatf:
+                    case OVRPlugin.Posef:
+                        var elemType = elem.GetType();
+                        var elemProperties = elemType.GetFields
+                            (BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+                        var elemSelection = elemProperties.Select(property => property.GetValue(elem)).ToList();
+                        elem = elemSelection;
+                        break;
+                    case null:
+                        elem = "n";
+                        break;
+                }
+                
+                // Parse and save elem
+                if (elem is ICollection or IList) result += "< " + BuildRecursively((IEnumerable)elem) + "> ";
+                else result += "" + elem + " ";
+            }
+
+            return result;
         }
     }
 
