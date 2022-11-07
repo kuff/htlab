@@ -29,7 +29,6 @@ public class HandLogger : MonoBehaviour
 
     private OVRPlugin.HandState _hsLeft = new OVRPlugin.HandState();
     private OVRPlugin.HandState _hsRight = new OVRPlugin.HandState();
-    private OVRSkeleton[] _skeletonObjects;
     private Transform _mainCameraTransform;
     
     private static readonly List<IEnumerable> _logQueue = new List<IEnumerable>();
@@ -51,8 +50,6 @@ public class HandLogger : MonoBehaviour
 
     protected void Start()
     {
-        _skeletonObjects = FindObjectsOfType<OVRSkeleton>();
-
         var cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
         _mainCameraTransform = cameraObject!.transform;
         
@@ -97,6 +94,7 @@ public class HandLogger : MonoBehaviour
 
     private static IEnumerable<object> GetSortedValues(OVRPlugin.HandState inputHandState)
     {
+        // Hardcoded value return for HandState objects
         var result = new List<object>
         {
             inputHandState.Status,
@@ -117,6 +115,7 @@ public class HandLogger : MonoBehaviour
     
     private static IEnumerable<object> GetSortedValues(Transform inputTransform)
     {
+        // Hardcoded value return for Transform objects
         var result = new List<object>
         {
             inputTransform.position, 
@@ -151,7 +150,7 @@ public class HandLogger : MonoBehaviour
 
     private static void Log(LogType type, IEnumerable listData = default, bool ignorePrevious = false)
     {
-        var data = listData?.Cast<object>().ToList();
+        var data = listData?.Cast<object>().ToList();  // Cast input data to list
         
         // Check to make sure provided data is unique from previous log
         if (!ignorePrevious && _previousLogs[(int)type] is not null && data is not null && data.Count == _previousLogs[(int)type].Count)
@@ -160,23 +159,30 @@ public class HandLogger : MonoBehaviour
             {
                 if (type is LogType.LeftHand or LogType.RightHand)
                 {
+                    // Handle hand comparisons differently from other data by looking at orientation specifically
                     var compDataNew = (OVRPlugin.Posef)data[3];
                     var compDataOld = (OVRPlugin.Posef)_previousLogs[(int)type][3];
                     var orientation1 = compDataNew.Orientation;
                     var orientation2 = compDataOld.Orientation;
                     if (orientation1.Equals(orientation2)) return;
                 }
-                var obj1 = JsonConvert.SerializeObject(data);
-                var obj2 = JsonConvert.SerializeObject(_previousLogs[(int)type]);
-                if (obj1 == obj2) return;
+                else
+                {
+                    // Compare other objects by turning them to json and comparing the strings
+                    // TODO: Come up with a more performant approach to this
+                    var obj1 = JsonConvert.SerializeObject(data);
+                    var obj2 = JsonConvert.SerializeObject(_previousLogs[(int)type]);
+                    if (obj1 == obj2) return;
+                }
             }
             catch
             {
-                // ignored
+                // Ignored...
             }
         }
         _previousLogs[(int)type] = data;
         
+        // Define the beginning of the log string with LogType and timestamp
         var baseString = "" + (int) (Time.realtimeSinceStartup * 10000) + " " + (int)type + " ";
 
         // Parse log command
@@ -188,7 +194,7 @@ public class HandLogger : MonoBehaviour
             case LogType.LeftHand:
             case LogType.RightHand:
             case LogType.Head:
-                _logQueue.Add(baseString + BuildRecursively(data));
+                _logQueue.Add(baseString + BuildRecursively(data));  // Parse complex objects recursively
                 break;
             case LogType.Focus:
                 _logQueue.Add(baseString + ((bool)data![0] ? 1 : 0));
@@ -208,7 +214,7 @@ public class HandLogger : MonoBehaviour
 
         string BuildRecursively(IEnumerable input)
         {
-            var result = "";
+            var result = "";  // What will become the end result string
             var e = input.GetEnumerator();
             while (e.MoveNext())
             {
@@ -225,10 +231,12 @@ public class HandLogger : MonoBehaviour
                     case OVRPlugin.Vector3f:
                     case OVRPlugin.Quatf:
                     case OVRPlugin.Posef:
+                        // Extract object values through Reflection
                         var elemType = elem.GetType();
                         var elemProperties = elemType.GetFields
                             (BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
-                        var elemSelection = elemProperties.Select(property => property.GetValue(elem)).ToList();
+                        var elemSelection = elemProperties.Select(property => 
+                            property.GetValue(elem)).ToList();
                         elem = elemSelection;
                         break;
                     case null:
@@ -255,17 +263,20 @@ public class HandLogger : MonoBehaviour
 #endif
         try
         {
+            // Open log file or create one and write log entries as lines
             using (var sw = File.AppendText(path))
             {
                 foreach (var list in _logQueue)
                     sw.WriteLine(list.ToString());
             }
 
+            // Clear log queue and return
             _logQueue.Clear();
             _fileSystemOperationInProgress = false;
             _pointOfLastWrite = Time.realtimeSinceStartup;
             return true;
         }
+        // NOTE: Currently errors are not handled beyond this
         catch (InvalidDataException e)
         {
             Debug.LogError("Target log path exists but is read-only\n" + e);
