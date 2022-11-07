@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
 using UnityEngine;
 
 /*
@@ -39,6 +40,7 @@ public class HandLogger : MonoBehaviour
     private static int _frameCounter = 0;
     private static float _frameCountTimestamp = -1f;
     private static int _invokesSinceLastWrite = LOGGING_FREQUENCY - 1;
+    private static readonly IList[] _previousLogs = new IList[8];
 #pragma warning restore CS0414
 
     protected void OnEnable()
@@ -149,8 +151,32 @@ public class HandLogger : MonoBehaviour
 
     private static void Log(LogType type, IEnumerable listData = default, bool ignorePrevious = false)
     {
-        // Parse data if any and setup base log string to append to
         var data = listData?.Cast<object>().ToList();
+        
+        // Check to make sure provided data is unique from previous log
+        if (!ignorePrevious && _previousLogs[(int)type] is not null && data is not null && data.Count == _previousLogs[(int)type].Count)
+        {
+            try
+            {
+                if (type is LogType.LeftHand or LogType.RightHand)
+                {
+                    var compDataNew = (OVRPlugin.Posef)data[3];
+                    var compDataOld = (OVRPlugin.Posef)_previousLogs[(int)type][3];
+                    var orientation1 = compDataNew.Orientation;
+                    var orientation2 = compDataOld.Orientation;
+                    if (orientation1.Equals(orientation2)) return;
+                }
+                var obj1 = JsonConvert.SerializeObject(data);
+                var obj2 = JsonConvert.SerializeObject(_previousLogs[(int)type]);
+                if (obj1 == obj2) return;
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+        _previousLogs[(int)type] = data;
+        
         var baseString = "" + (int) (Time.realtimeSinceStartup * 10000) + " " + (int)type + " ";
 
         // Parse log command
