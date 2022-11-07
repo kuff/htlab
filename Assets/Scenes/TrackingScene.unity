@@ -15,9 +15,9 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.6784314, g: 0.73333335, b: 0.7372549, a: 1}
+  m_FogColor: {r: 0.7877358, g: 0.93778723, b: 1, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.06
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -385,14 +385,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411624343}
-  m_LocalRotation: {x: -0.004844391, y: 0.4341836, z: -0.01458404, w: 0.9006933}
-  m_LocalPosition: {x: -21.21, y: 34.27, z: 7.02}
+  m_LocalRotation: {x: -0.005388705, y: 0.40004998, z: -0.014391811, w: 0.91636443}
+  m_LocalPosition: {x: -20.02, y: 34.26, z: 7.8900003}
   m_LocalScale: {x: 0.50449216, y: 0.50449216, z: 0.50449216}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 246157250}
   m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0.226, y: 51.47, z: -1.747}
+  m_LocalEulerAnglesHint: {x: 0.094, y: 47.167, z: -1.759}
 --- !u!212 &411624345
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -540,6 +540,8 @@ GameObject:
   - component: {fileID: 629609886}
   - component: {fileID: 629609888}
   - component: {fileID: 629609887}
+  - component: {fileID: 629609889}
+  - component: {fileID: 629609890}
   m_Layer: 0
   m_Name: Dinkey
   m_TagString: Untagged
@@ -634,6 +636,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &629609889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629609885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cbb466e430428f4684ec67fa80c2e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xSpread: 11
+  zSpread: 11
+  yOffset: 0.4
+  centerPoint: {fileID: 1494754624}
+  rotSpeed: 0.1
+  rotateClockwise: 0
+--- !u!114 &629609890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629609885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b289f01e0ea0f9d449e0a42da64eb758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRotationAngle: 0
+  period: 60
+  myTime: 0
+  rotationAxis: 0
 --- !u!1 &721048258
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,7 +779,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 762032162}
   m_LocalRotation: {x: -0, y: -0.41008663, z: -0, w: 0.9120466}
-  m_LocalPosition: {x: -19.58, y: 34.273537, z: -9.57}
+  m_LocalPosition: {x: -18.35, y: 34.273537, z: -9.99}
   m_LocalScale: {x: 0.28848493, y: 0.28848496, z: 0.28848493}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2176,7 +2212,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990994377}
   m_LocalRotation: {x: -0, y: -0.31930852, z: -0, w: 0.94765085}
-  m_LocalPosition: {x: -19.6101, y: 33.413536, z: -10.649399}
+  m_LocalPosition: {x: -18.3801, y: 33.413536, z: -11.069399}
   m_LocalScale: {x: 0.2544829, y: 0.2544829, z: 0.2544829}
   m_ConstrainProportionsScale: 0
   m_Children: []

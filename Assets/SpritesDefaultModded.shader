@@ -1,4 +1,4 @@
- Shader "Custom/SpritesDefaultModded"
+ Shader "Custom/SpritesDefaultModded"  // ORIGINAL: https://answers.unity.com/questions/1244402/trying-to-have-sprites-affected-by-fog-without-hav.html
  {
      Properties
      {

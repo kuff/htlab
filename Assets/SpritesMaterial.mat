@@ -28,5 +28,5 @@ Material:
     m_Floats:
     - PixelSnap: 0
     m_Colors:
-    - _Color: {r: 1, g: 0.92360246, b: 0.89056605, a: 1}
+    - _Color: {r: 0.23349059, g: 0.28318235, b: 0.31132078, a: 1}
   m_BuildTextureStacks: []
