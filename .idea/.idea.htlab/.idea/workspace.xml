@@ -7,8 +7,8 @@
     <list default="true" id="49a4e0a7-3852-4a9e-a05d-8a7b57c8b559" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.htlab/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.htlab/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/TrackingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TrackingScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SpritesDefaultModded.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SpritesDefaultModded.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SpritesMaterial.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SpritesMaterial.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Orbit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Orbit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +97,8 @@
       <workItem from="1667809993455" duration="3292000" />
       <workItem from="1667819841139" duration="1819000" />
       <workItem from="1667850492919" duration="3338000" />
+      <workItem from="1668626714597" duration="650000" />
+      <workItem from="1668675819074" duration="598000" />
     </task>
     <servers />
   </component>

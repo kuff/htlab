@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /*
@@ -9,12 +10,18 @@ public class Orbit : MonoBehaviour {
     public float zSpread;
     public float yOffset;
     public Transform centerPoint;
+    public float startTimeOffset;
 
     public float rotSpeed;
     public bool rotateClockwise;
 
     private float timer = 0;
-	
+
+    private void Start()
+    {
+        timer = startTimeOffset;
+    }
+
     private void Update () {
         timer += Time.deltaTime * rotSpeed;
         Rotate();
